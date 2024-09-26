@@ -1,3 +1,5 @@
+'use client'
+import { useEffect } from "react";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import "./control-panel-style.css";
@@ -23,6 +25,22 @@ export function ControlPanel({
   scale,
   setScale,
 }: ControlPanelProps) {
+  // Handle mouse scroll zoom
+  useEffect(() => {
+    const handleScroll = (event: WheelEvent) => {
+      event.preventDefault(); // Prevent default scroll behavior
+      const zoomAmount = event.deltaY > 0 ? -0.1 : 0.1; // Zoom in or out based on scroll direction
+      onZoom(zoomAmount);
+    };
+
+    window.addEventListener("wheel", handleScroll, { passive: false });
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("wheel", handleScroll);
+    };
+  }, [onZoom]);
+
   return (
     <>
       <div className="controlPanel">
@@ -61,14 +79,15 @@ export function ControlPanel({
             </button>
           </Tippy>
         </div>
-      </div>{" "}
+      </div>
       <a
         className="link"
         href="https://github.com/PushpankDhruw/NinjaSketch"
         target="_blank"
+        rel="noopener noreferrer" // Improved security
       >
         <FiGithub />
-        Created by ⚡Pushapnk
+        Created by ⚡Pushpank
       </a>
     </>
   );
