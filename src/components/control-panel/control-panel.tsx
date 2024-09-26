@@ -64,7 +64,7 @@ export function ControlPanel({
       </div>{" "}
       <a
         className="link"
-        href="https://github.com/PushpankDhruw"
+        href="https://github.com/PushpankDhruw/NinjaSketch"
         target="_blank"
       >
         <FiGithub />
